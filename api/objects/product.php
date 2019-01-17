@@ -23,7 +23,7 @@ class Product{
      
         // select all query
         $query = "SELECT
-                    p.id, p.name, p.description, p.price, pi.images, p.created
+                    p.id, p.name, p.description, p.price, pi.images, pi.id as item_id, p.created
                 FROM
                     " . $this->table_name . " p
                     JOIN

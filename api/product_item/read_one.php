@@ -8,7 +8,7 @@ header('Content-Type: application/json');
  
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/product.php';
+include_once '../objects/product_item.php';
  
 // get database connection
 $database = new Database();
@@ -22,17 +22,23 @@ $product->id = isset($_GET['id']) ? $_GET['id'] : die();
  
 // read the details of product to be edited
 $product->readOne();
- 
+
 if($product->name!=null){
     // create array
     $product_arr = array(
-        "id" =>  $product->id,
-        "name" => $product->name,
-        "description" => $product->description,
-        "price" => $product->price,
-        "category_id" => $product->category_id,
-        "category_name" => $product->category_name
- 
+        "id" => $id,
+        "name" => $name,
+        "description" => html_entity_decode($description),
+        "price" => $price,
+        "category_id" => $category_id,
+        "category_name" => $category_name,
+        "color_id" => $color_id,
+        "color_name" => $color_name,
+        "size" => $size,
+        "images" => $images,
+        "created" => $created,
+        "updated" => $updated
+
     );
  
     // set response code - 200 OK
@@ -47,6 +53,6 @@ else{
     http_response_code(404);
  
     // tell the user product does not exist
-    echo json_encode(array("message" => "Product does not exist."));
+    echo json_encode(array("message" => "Product ".$product->id." does not exist."));
 }
 ?>
